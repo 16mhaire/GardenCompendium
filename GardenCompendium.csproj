@@ -68,10 +68,16 @@
 	  <Compile Update="AddressPage.xaml.cs">
 	    <DependentUpon>AddressPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="PlantsList.xaml.cs">
+	    <DependentUpon>PlantsList</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="AddressPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="PlantsList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

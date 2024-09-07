@@ -4,34 +4,49 @@
              x:Class="GardenCompendium.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
+        <FlexLayout
+            Direction="Row"
+            JustifyContent="SpaceBetween">
+            <CollectionView FlexLayout.Basis="50%"
+                x:Name="MyPlants"
+                ItemsSource="{Binding Plants}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Name}"
+                                   FontSize="Medium" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <VerticalStackLayout FlexLayout.Basis="50%"
             Padding="30,0"
             Spacing="25">
-            <Image
+                <Image
                 Source="garden_compendium_logo.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="Garden Compendium Logo WIP" />
 
-            <Label
+                <Label
                 Text="{Binding ZipCode}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"/>
 
-            <Button 
+                <Button 
                 Text="Enter Zip Code"
                 Clicked="OnNavigateToAddressEntryPageClicked" />
 
-            <ListView x:Name="MyPlantsListView"
+                <ListView x:Name="MyPlantsListView"
                       ItemsSource="{Binding Plants}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}"
-                                  Detail="{Binding ScientificName[0]}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </VerticalStackLayout>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Name}"
+                            Detail="{Binding ScientificName[0]}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </FlexLayout>
     </ScrollView>
-
 </ContentPage>

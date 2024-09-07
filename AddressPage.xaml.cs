@@ -27,22 +27,22 @@ public partial class AddressEntryPage : ContentPage
         if (
             string.IsNullOrWhiteSpace(postalCode))
         {
-            await DisplayAlert("Error", "Please fill in all the fields.", "OK");
+            await DisplayAlert("Error", "Please provide a valid postal code.", "OK");
             return;
         }
+        // We only want to use the geocode api sparingly, we only have 150 free queries per month.
+        //string plantZone = await getZoneAsync(postalCode);
+        string plantZone = "7";
 
-        getZoneAsync(postalCode);
-
-        var plantZone = 7;
         // Generate a 1 plant suitable for this zone
-        string perenualKey = "sk-u1y166986d6db54465954";
+        string perenualKey = Config.ApiKeys.PerenualKey;
         string perenualURL = $"https://perenual.com/api/species-list?key={perenualKey}&hardiness={plantZone}";
-        Plant plant = await PlantService.GetPlantAsync(perenualURL);
+        List<Plant> plants = await PlantService.GetPlantAsync(perenualURL);
 
-        if (plant != null)
+        if (plants != null)
         {
-            await DisplayAlert("Plant Aquired", plant.Name, "OK");
-            _mainPage.Plants.Add(plant);
+            await DisplayAlert("Plant Aquired", plants[0].Name, "OK");
+            //_mainPage.Plants = plants;
             _mainPage.ZipCode = postalCode;
 
             await Navigation.PopAsync();
@@ -63,17 +63,25 @@ public partial class AddressEntryPage : ContentPage
             RequestUri = new Uri("https://plant-hardiness-zone.p.rapidapi.com/zipcodes/" + postalCode),
             Headers =
     {
-        { "x-rapidapi-key", "17357bfdcbmsh1784dad2b3680abp14d5f2jsnd6ae13cfd017" },
-        { "x-rapidapi-host", "plant-hardiness-zone.p.rapidapi.com" },
+        { "x-rapidapi-key", Config.ApiKeys.RapidKey },
+        { "x-rapidapi-host", Config.ApiUrls.RapidUrl },
     },
         };
         using (var response = await client.SendAsync(request))
         {
             response.EnsureSuccessStatusCode();
-            var body = await response.Content.ReadAsStringAsync();
-            await DisplayAlert("Zone Info", body, "OK");
+            string zoneString = await response.Content.ReadAsStringAsync();
+            var zoneData = JsonConvert.DeserializeObject<ZoneInfo>(zoneString);
+            return zoneData.Zone;
         }
-        return null;
+    }
+
+    public class ZoneInfo()
+    {
+        [JsonProperty("hardiness_zone")]
+        public string Zone { get; set; }
+        [JsonProperty("zipcode")]
+        public int Zipcode { get; set; }
     }
 }
 

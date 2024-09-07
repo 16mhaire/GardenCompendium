@@ -10,7 +10,7 @@ namespace GardenCompendium
     public static class PlantService
     {
         private static readonly HttpClient _httpClient = new HttpClient();
-        public static async Task<Plant> GetPlantAsync(string url)
+        public static async Task<List<Plant>> GetPlantAsync(string url)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace GardenCompendium
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var plantData = JsonConvert.DeserializeObject<PlantData>(jsonResponse);
 
-                return plantData.Data.Count > 0 ? plantData.Data[0] : null;
+                return plantData.Data.Count > 0 ? plantData.Data : null;
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace GardenCompendium
         [JsonProperty("default_image")]
         public Image DefaultImage { get; set; }
 
-        private async Task<Plant> getPlantAsync(string url)
+        private async Task<List<Plant>> getPlantAsync(string url)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -69,7 +69,7 @@ namespace GardenCompendium
 
                 if (plantData != null)
                 {
-                    return plantData.Data[0];
+                    return plantData.Data;
                 }
 
                 return null;

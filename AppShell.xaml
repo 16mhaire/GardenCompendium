@@ -12,14 +12,14 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
-    <ShellContent
+    <!-- <ShellContent
         Title="My Plants"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
     <ShellContent
         Title="My Zone"
-        ContentTemplate="{DataTemplate local:AddressPage}"
-        Route="AddressPage" />
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="AddressPage" /> -->
 
 </Shell>
