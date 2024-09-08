@@ -35,7 +35,7 @@ public partial class AddressEntryPage : ContentPage
         string plantZone = "7";
 
         // Generate a 1 plant suitable for this zone
-        string perenualKey = Config.ApiKeys.PerenualKey;
+        string perenualKey = Config.ApiKeys.PerenualApiKey;
         string perenualURL = $"https://perenual.com/api/species-list?key={perenualKey}&hardiness={plantZone}";
         List<Plant> plants = await PlantService.GetPlantAsync(perenualURL);
 
@@ -44,7 +44,7 @@ public partial class AddressEntryPage : ContentPage
             await DisplayAlert("Plant Aquired", plants[0].Name, "OK");
             //_mainPage.Plants = plants;
             _mainPage.ZipCode = postalCode;
-
+            
             await Navigation.PopAsync();
         }
         else
@@ -63,7 +63,7 @@ public partial class AddressEntryPage : ContentPage
             RequestUri = new Uri("https://plant-hardiness-zone.p.rapidapi.com/zipcodes/" + postalCode),
             Headers =
     {
-        { "x-rapidapi-key", Config.ApiKeys.RapidKey },
+        { "x-rapidapi-key", Config.ApiKeys.RapidApiKey },
         { "x-rapidapi-host", Config.ApiUrls.RapidUrl },
     },
         };

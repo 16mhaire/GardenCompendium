@@ -4,6 +4,26 @@
              x:Class="GardenCompendium.MainPage">
 
     <ScrollView>
+        <VerticalStackLayout
+            Padding="30, 0"
+            Spacing="25"
+            
+            <Image
+                Source="garden_compendium_logo.png"
+                HeightRequest="185"
+                Aspect="185"
+                SemanticProperties.Description="Garden Compendium Logo WIP"
+                
+            <Label
+                Text="{Binding ZipCode}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                
+            <
+                
+    </ScrollView>
+
+<!--<ScrollView>
         <FlexLayout
             Direction="Row"
             JustifyContent="SpaceBetween">
@@ -49,4 +69,4 @@
             </VerticalStackLayout>
         </FlexLayout>
     </ScrollView>
-</ContentPage>
+</ContentPage>-->

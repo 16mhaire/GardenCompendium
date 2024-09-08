@@ -37,8 +37,8 @@ namespace GardenCompendium
 
     public class ApiKeys
     {
-        public string PerenualKey { get; set; }
-        public string RapidKey { get; set; }
+        public string PerenualApiKey { get; set; }
+        public string RapidApiKey { get; set; }
     }
 
     public class ApiUrls
