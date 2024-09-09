@@ -6,17 +6,22 @@ using Newtonsoft.Json;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Security.Cryptography.X509Certificates;
+using System.Collections.ObjectModel;
 
 namespace GardenCompendium;
 
 public partial class AddressEntryPage : ContentPage
 {
-    private MainPage _mainPage;
+    private User? _user;
 
-    public AddressEntryPage(MainPage mainPage)
+    public AddressEntryPage() // Constructor
     {
         InitializeComponent();
-        _mainPage = mainPage;
+    }
+
+    public AddressEntryPage(User user)
+    {
+        InitializeComponent();
     }
 
     private async void OnSubmitClicked(object sender, EventArgs e)
@@ -38,12 +43,12 @@ public partial class AddressEntryPage : ContentPage
         string perenualKey = Config.ApiKeys.PerenualApiKey;
         string perenualURL = $"https://perenual.com/api/species-list?key={perenualKey}&hardiness={plantZone}";
         List<Plant> plants = await PlantService.GetPlantAsync(perenualURL);
+        ObservableCollection<Plant> observablePlants = new ObservableCollection<Plant>(plants);
 
         if (plants != null)
         {
             await DisplayAlert("Plant Aquired", plants[0].Name, "OK");
-            //_mainPage.Plants = plants;
-            _mainPage.ZipCode = postalCode;
+            _mainPage.Plants = observablePlants;
             
             await Navigation.PopAsync();
         }

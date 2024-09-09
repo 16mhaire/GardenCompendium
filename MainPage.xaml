@@ -6,22 +6,40 @@
     <ScrollView>
         <VerticalStackLayout
             Padding="30, 0"
-            Spacing="25"
-            
+            Spacing="25">
+
             <Image
                 Source="garden_compendium_logo.png"
                 HeightRequest="185"
-                Aspect="185"
-                SemanticProperties.Description="Garden Compendium Logo WIP"
-                
+                Aspect="AspectFit"
+                SemanticProperties.Description="Garden Compendium Logo WIP"/>
+
             <Label
                 Text="{Binding ZipCode}"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
-                
-            <
-                
+                VerticalOptions="Center"/>
+
+            <!--<Button
+                Text="Open Menu"
+                Clicked="OnOpenFlyoutMenuClicked"/>-->
+
+            <CollectionView x:Name="MyPlantsCollectionView"
+                            ItemsSource="{Binding Plants}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="Binding Name"
+                                   FontAttributes="Bold"
+                                   FontSize="Medium"/>
+                            <Label Text="{Binding ScientificName[0]}"
+                                   FontSize="Small"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
     </ScrollView>
+</ContentPage>
 
 <!--<ScrollView>
         <FlexLayout
