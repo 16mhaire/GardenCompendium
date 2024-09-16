@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GardenCompendium.MainPage">
 
-    <ScrollView>
+
+    <AbsoluteLayout
+        x:Name="GardenLayout"
+        BackgroundColor="LightGreen">
+    </AbsoluteLayout>
+</ContentPage>
+<!--   <ScrollView>
         <VerticalStackLayout
             Padding="30, 0"
             Spacing="25">
@@ -19,9 +25,9 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"/>
 
-            <!--<Button
+            <Button
                 Text="Open Menu"
-                Clicked="OnOpenFlyoutMenuClicked"/>-->
+                Clicked="OnOpenFlyoutMenuClicked"/>
 
             <CollectionView x:Name="MyPlantsCollectionView"
                             ItemsSource="{Binding Plants}">
@@ -38,53 +44,5 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-    </ScrollView>
-</ContentPage>
-
-<!--<ScrollView>
-        <FlexLayout
-            Direction="Row"
-            JustifyContent="SpaceBetween">
-            <CollectionView FlexLayout.Basis="50%"
-                x:Name="MyPlants"
-                ItemsSource="{Binding Plants}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <VerticalStackLayout Padding="10">
-                            <Label Text="{Binding Name}"
-                                   FontSize="Medium" />
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <VerticalStackLayout FlexLayout.Basis="50%"
-            Padding="30,0"
-            Spacing="25">
-                <Image
-                Source="garden_compendium_logo.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="Garden Compendium Logo WIP" />
-
-                <Label
-                Text="{Binding ZipCode}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"/>
-
-                <Button 
-                Text="Enter Zip Code"
-                Clicked="OnNavigateToAddressEntryPageClicked" />
-
-                <ListView x:Name="MyPlantsListView"
-                      ItemsSource="{Binding Plants}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Name}"
-                            Detail="{Binding ScientificName[0]}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </VerticalStackLayout>
-        </FlexLayout>
     </ScrollView>
 </ContentPage>-->

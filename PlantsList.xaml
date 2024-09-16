@@ -3,18 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GardenCompendium.PlantsList"
              Title="Plants List">
+    
     <ScrollView>
         <VerticalStackLayout>
-            <ListView
+            <CollectionView 
                 x:Name="PlantList"
-                ItemsSource="{Binding plants}">
-                <ListView.ItemTemplate>
+                ItemsSource="{Binding Plants}">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}"
-                            Detail="{Binding ScientificName[0]}"/>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Image Source="{Binding DefaultImage.RegularUrl}" WidthRequest="50" HeightRequest="50"/>
+                            <StackLayout Orientation="Vertical" Padding="10">
+                                <Label Text="{Binding Name}" />
+                            <Label Text="{Binding ScientificName[0]}"/>
+                            </StackLayout>
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

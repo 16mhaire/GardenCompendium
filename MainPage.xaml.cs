@@ -1,33 +1,40 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Microsoft.Maui.Layouts;
 
 
 namespace GardenCompendium
 {
     public partial class MainPage : ContentPage
-    {   
-        public ObservableCollection<Plant> Plants { get; set; }
+    {
         public MainPage()
         {
             InitializeComponent();
-
-            Plants = new ObservableCollection<Plant>();
-            MyPlantsCollectionView.ItemsSource = Plants;
-            BindingContext = this;
+            AddPlantToLayout("Rose", 200, 200);
         }
 
-        private async void OnNavigateToAddressEntryPageClicked(object sender, EventArgs e)
+        private void AddPlantToLayout(string plantName, double x, double y)
         {
-            await Navigation.PushAsync(new AddressEntryPage(this));
-        }
-       /* public event PropertyChangedEventHandler PropertyChanged;
+            var plantLabel = new Label
+            {
+                Text = plantName,
+                BackgroundColor = Colors.LightYellow,
+                WidthRequest = 100,
+                HeightRequest = 50
+            };
 
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                DisplayAlert("Plant Info", $"Plant: {plantName}", "OK");
+            };
+            plantLabel.GestureRecognizers.Add(tapGestureRecognizer);
+
+            AbsoluteLayout.SetLayoutBounds(plantLabel, new Rect(x, y, 100, 50));
+            AbsoluteLayout.SetLayoutFlags(plantLabel, AbsoluteLayoutFlags.None);
+
+            GardenLayout.Children.Add(plantLabel);
         }
-       */
     }
-
-
 }

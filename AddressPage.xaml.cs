@@ -43,12 +43,11 @@ public partial class AddressEntryPage : ContentPage
         string perenualKey = Config.ApiKeys.PerenualApiKey;
         string perenualURL = $"https://perenual.com/api/species-list?key={perenualKey}&hardiness={plantZone}";
         List<Plant> plants = await PlantService.GetPlantAsync(perenualURL);
-        ObservableCollection<Plant> observablePlants = new ObservableCollection<Plant>(plants);
+        //ObservableCollection<Plant> observablePlants = new ObservableCollection<Plant>(plants);
 
         if (plants != null)
         {
             await DisplayAlert("Plant Aquired", plants[0].Name, "OK");
-            _mainPage.Plants = observablePlants;
             
             await Navigation.PopAsync();
         }
@@ -56,37 +55,6 @@ public partial class AddressEntryPage : ContentPage
         {
             await DisplayAlert("Error", "Failed to fetch plant data.", "OK");
         }
-    }
-
-
-    private async Task<string> getZoneAsync(string postalCode)
-    {
-        var client = new HttpClient();
-        var request = new HttpRequestMessage
-        {
-            Method = HttpMethod.Get,
-            RequestUri = new Uri("https://plant-hardiness-zone.p.rapidapi.com/zipcodes/" + postalCode),
-            Headers =
-    {
-        { "x-rapidapi-key", Config.ApiKeys.RapidApiKey },
-        { "x-rapidapi-host", Config.ApiUrls.RapidUrl },
-    },
-        };
-        using (var response = await client.SendAsync(request))
-        {
-            response.EnsureSuccessStatusCode();
-            string zoneString = await response.Content.ReadAsStringAsync();
-            var zoneData = JsonConvert.DeserializeObject<ZoneInfo>(zoneString);
-            return zoneData.Zone;
-        }
-    }
-
-    public class ZoneInfo()
-    {
-        [JsonProperty("hardiness_zone")]
-        public string Zone { get; set; }
-        [JsonProperty("zipcode")]
-        public int Zipcode { get; set; }
     }
 }
 

@@ -38,27 +38,27 @@ namespace GardenCompendium
         public int Id { get; set; }
 
         [JsonProperty("common_name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("scientific_name")]
-        public List<string> ScientificName { get; set; }
+        public List<string>? ScientificName { get; set; }
 
         [JsonProperty("other_name")]
-        public List<string> OtherName { get; set; }
+        public List<string>? OtherName { get; set; }
 
         [JsonProperty("cycle")]
-        public string Cycle { get; set; }
+        public string? Cycle { get; set; }
 
         [JsonProperty("watering")]
-        public string Watering { get; set; }
+        public string? Watering { get; set; }
 
         [JsonProperty("sunlight")]
-        public List<string> Sunlight { get; set; }
+        public List<string>? Sunlight { get; set; }
 
         [JsonProperty("default_image")]
-        public Image DefaultImage { get; set; }
+        public Image? DefaultImage { get; set; }
 
-        private async Task<List<Plant>> getPlantAsync(string url)
+        private async Task<List<Plant>?> getPlantAsync(string url)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -81,10 +81,10 @@ namespace GardenCompendium
     public class PlantData
     {
         [JsonProperty("data")]
-        public List<Plant> Data { get; set; }
+        public List<Plant>? Data { get; set; }
     }
 
-    public class DefaultImage
+    public class Image
     {
         [JsonProperty("image_id")]
         public int ImageId { get; set; }
@@ -93,24 +93,24 @@ namespace GardenCompendium
         public int License { get; set; }
 
         [JsonProperty("license_name")]
-        public string LicenseName { get; set; }
+        public string? LicenseName { get; set; }
 
         [JsonProperty("license_url")]
-        public string LicenseUrl { get; set; }
+        public string? LicenseUrl { get; set; }
 
         [JsonProperty("original_url")]
-        public string OriginalUrl { get; set; }
+        public string? OriginalUrl { get; set; }
 
         [JsonProperty("regular_url")]
-        public string RegularUrl { get; set; }
+        public string? RegularUrl { get; set; }
 
         [JsonProperty("medium_url")]
-        public string MediumUrl { get; set; }
+        public string? MediumUrl { get; set; }
 
         [JsonProperty("small_url")]
-        public string SmallUrl { get; set; }
+        public string? SmallUrl { get; set; }
 
         [JsonProperty("thumbnail")]
-        public string Thumbnail { get; set; }
+        public string? Thumbnail { get; set; }
     }
 }

@@ -13,14 +13,23 @@
         Route="MainPage" />
 
     <ShellContent
+        Title="All Plants"
+        ContentTemplate="{DataTemplate local:PlantsList}"
+        Route="PlantsList" />
+
+    <ShellContent
         Title="My Plants"
-        ContentTemplate="{DataTemplate local:AddressEntryPage}"
-        Route="AddressEntryPage" />
+        ContentTemplate="{DataTemplate local:UserPlantsList}"
+        Route="UserPlantsList" />
 
     <ShellContent
         Title="Enter Address"
         ContentTemplate="{DataTemplate local:AddressEntryPage}"
         Route="AddressPage" />
 
-                
+    <ShellContent 
+        ContentTemplate="{DataTemplate local:UserCreationPage}"
+        Route="UserCreationPage" />
+
+
 </Shell>
