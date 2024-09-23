@@ -38,4 +38,31 @@ public partial class PlantsList : ContentPage, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    private async void OnAddToUserPlantsClicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        var selectedPlant = (Plant)button.CommandParameter;
+
+        User user = await UserService.GetUserAsync();
+
+        if (user.Plants == null)
+        {
+            user.Plants = new ObservableCollection<Plant>();
+        }
+
+        if (user.Plants.Contains(selectedPlant))
+        {
+            await DisplayAlert("Alert", "This plant is already in your garden!", "Ok");
+            return;
+        }
+
+        user.Plants.Add(selectedPlant);
+
+        await UserService.SaveUserAsync(user);
+
+        OnPropertyChanged(nameof(user.Plants));
+
+        await DisplayAlert("Success", $"{selectedPlant.Name} has been added to your plant list!", "OK");
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -14,7 +15,7 @@ namespace GardenCompendium
         private string _lastName;
         private string? _zipCode;
         private string? _zone;
-        private List<Plant>? _plants;
+        private ObservableCollection<Plant>? _plants;
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,14 +25,14 @@ namespace GardenCompendium
             set { if (_zipCode != value) { _zipCode = value; } } }
         public string? Zone { get { return _zone; } set { _zone = value; } }
 
-        public List<Plant> Plants { get { return _plants; } set { _plants = value; } }
+        public ObservableCollection<Plant> Plants { get { return _plants; } set { _plants = value; } }
 
         public User(string firstName, string lastName, string zipCode) 
         { 
             _firstName = firstName;
             _lastName = lastName;
             _zipCode = zipCode;
-            _plants = new List<Plant>();
+            _plants = new ObservableCollection<Plant>();
 
             string zoneTask = AddressService.GetZoneAsync(zipCode).Result;
         }

@@ -36,5 +36,21 @@ namespace GardenCompendium
 
             GardenLayout.Children.Add(plantLabel);
         }
+        private void OnPlantDragStarting(object sender, DragStartingEventArgs e)
+        {
+            // Example: You can attach the plant name to the drag operation
+            var plant = (Plant)((Element)sender).BindingContext;
+            e.Data.Properties.Add("PlantName", plant.Name);
+        }
+
+        // Event for dropping the dragged item
+        private void OnPlantDrop(object sender, DropEventArgs e)
+        {
+            if (e.Data.Properties.ContainsKey("PlantName"))
+            {
+                string plantName = e.Data.Properties["PlantName"].ToString();
+                DisplayAlert("Plant Dropped", $"You dropped {plantName}!", "OK");
+            }
+        }
     }
 }

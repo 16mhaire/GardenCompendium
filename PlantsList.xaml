@@ -16,6 +16,9 @@
                             <StackLayout Orientation="Vertical" Padding="10">
                                 <Label Text="{Binding Name}" />
                             <Label Text="{Binding ScientificName[0]}"/>
+                                <Button Text="Add to My Plants" 
+                                        Clicked="OnAddToUserPlantsClicked" 
+                                        CommandParameter="{Binding .}" />
                             </StackLayout>
                         </StackLayout>
                     </DataTemplate>
