@@ -84,7 +84,7 @@ namespace GardenCompendium
         public List<Plant>? Data { get; set; }
     }
 
-    public class Image
+    public class Image : Microsoft.Maui.Controls.Image
     {
         [JsonProperty("image_id")]
         public int ImageId { get; set; }

@@ -8,7 +8,6 @@ namespace GardenCompendium
 {
     public partial class MainPage : ContentPage
     {
-        //public ObservableCollection<Plant> UserPlants { get; set; }
         public User user { get; set; }
         public ObservableCollection<Plant> plants { get; set; }
         public MainPage()
@@ -18,12 +17,9 @@ namespace GardenCompendium
 
             plants = new ObservableCollection<Plant>();
 
-            AddPlantToLayout("Corn", 200, 200);
-
             // Subscribe to PlantDeleted message
             MessagingCenter.Subscribe<UserPlantsList, Plant>(this, "PlantDeleted", (sender, deletedPlant) =>
             {
-                //user?.Plants.Remove(deletedPlant); // Directly remove from User.Plants
                 plants.Remove(deletedPlant);
             });
             OnAppearing();
@@ -48,45 +44,21 @@ namespace GardenCompendium
                 OnPropertyChanged(nameof(plants));  // Notify the UI to refresh
             }
         }
-        private void AddPlantToLayout(string plantName, double x, double y)
-        {
-            var plantLabel = new Label
-            {
-                Text = plantName,
-                BackgroundColor = Colors.LightYellow,
-                WidthRequest = 100,
-                HeightRequest = 50
-            };
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                DisplayAlert("Plant Info", $"Plant: {plantName}", "OK");
-            };
-            plantLabel.GestureRecognizers.Add(tapGestureRecognizer);
-
-            AbsoluteLayout.SetLayoutBounds(plantLabel, new Rect(x, y, 100, 50));
-            AbsoluteLayout.SetLayoutFlags(plantLabel, AbsoluteLayoutFlags.None);
-
-            GardenLayout.Children.Add(plantLabel);
-        }
-        /*private async Task LoadUserPlants()
-        {
-            User user = await UserService.GetUserAsync();
-            if (user != null)
-            {
-                UserPlants = user.Plants;
-
-            }
-        }*/
         private void OnDragStarting(object sender, DragStartingEventArgs e)
         {
-            // Get the plant bound to the image and pass it in drag data
-            var plant = (sender as VisualElement)?.BindingContext as Plant;
+            // sender is DragGestureRecognizer, so get the image it's attached to
+            var dragGestureRecognizer = sender as DragGestureRecognizer;
+            var image = dragGestureRecognizer?.Parent as Microsoft.Maui.Controls.Image; // or your custom Image class
 
-            if (plant != null)
+            if (image != null)
             {
-                e.Data.Properties.Add("Plant", plant);
+                var plant = image.BindingContext as Plant;
+
+                if (plant != null)
+                {
+                    e.Data.Properties.Add("Plant", plant);
+                }
             }
         }
 
@@ -96,10 +68,12 @@ namespace GardenCompendium
             {
                 var droppedPlant = e.Data.Properties["Plant"] as Plant;
 
-                // Add the plant's image to the AbsoluteLayout at the drop position
-                var position = e.GetPosition(GardenLayout) ?? new Point(0,0);
-
-                AddPlantImageToLayout(droppedPlant, position.X, position.Y);
+                if (droppedPlant != null)
+                {
+                    // Add the plant's image to the AbsoluteLayout at the drop position
+                    var position = e.GetPosition(GardenLayout) ?? new Point(0, 0);
+                    AddPlantImageToLayout(droppedPlant, position.X, position.Y);
+                } 
             }
         }
 
@@ -109,8 +83,17 @@ namespace GardenCompendium
             {
                 Source = plant.DefaultImage?.RegularUrl,
                 WidthRequest = 100,
-                HeightRequest = 100
+                HeightRequest = 100,
+                IsVisible = true,
+                Opacity = 1
             };
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                DisplayAlert("Plant Info", $"Plant: Clicked", "OK");
+            };
+            plantImage.GestureRecognizers.Add(tapGestureRecognizer);
 
             // Add the plant image to the AbsoluteLayout
             AbsoluteLayout.SetLayoutBounds(plantImage, new Rect(x, y, 100, 100));

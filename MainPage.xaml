@@ -15,7 +15,10 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal" Padding="10">
-                        <Image Source="{Binding DefaultImage.RegularUrl}" WidthRequest="50" HeightRequest="50">
+                        <Image Source="{Binding DefaultImage.RegularUrl}" 
+                               WidthRequest="50" 
+                               HeightRequest="50"
+                               BindingContext="{Binding .}">
                             <Image.GestureRecognizers>
                                 <DragGestureRecognizer DragStarting="OnDragStarting"/>
                             </Image.GestureRecognizers>
