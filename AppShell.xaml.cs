@@ -15,7 +15,9 @@
 
         private async void SetLaunchPageAsync()
         {
-            User user = await UserService.GetUserAsync();
+            await UserService.Instance.GetUserAsync();
+            User user = UserService.Instance.CurrentUser;
+
             if (user != null)
             {
                 await Navigation.PushAsync(new MainPage());// User exists, navigate to main app shell

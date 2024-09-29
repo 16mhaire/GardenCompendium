@@ -44,7 +44,7 @@ public partial class PlantsList : ContentPage, INotifyPropertyChanged
         var button = (Button)sender;
         var selectedPlant = (Plant)button.CommandParameter;
 
-        User user = await UserService.GetUserAsync();
+        User user = UserService.Instance.CurrentUser;
 
         if (user.Plants == null)
         {
@@ -59,7 +59,7 @@ public partial class PlantsList : ContentPage, INotifyPropertyChanged
 
         user.Plants.Add(selectedPlant);
 
-        await UserService.SaveUserAsync(user);
+        await UserService.Instance.SaveUserAsync(user);
 
         OnPropertyChanged(nameof(user.Plants));
 

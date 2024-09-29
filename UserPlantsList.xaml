@@ -8,7 +8,8 @@
         <VerticalStackLayout>
             <CollectionView 
             x:Name="UserPlantList"
-            ItemsSource="{Binding UserPlants}">
+            ItemsSource="{Binding UserPlants}"
+            SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal" Padding="10">
@@ -16,19 +17,14 @@
                             <StackLayout Orientation="Vertical" Padding="10">
                                 <Label Text="{Binding Name}" />
                                 <Label Text="{Binding ScientificName[0]}"/>
-                                <!--<StackLayout.GestureRecognizers>
-                                    <DragGestureRecognizer DragStarting="OnPlantDragStarting"/>
-                                </StackLayout.GestureRecognizers>-->
                             </StackLayout>
+                            <Button Text="Delete"
+                                    Clicked="OnDeletePlantClicked"
+                                    CommandParameter="{Binding .}" />
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <!--<BoxView Color="LightGray" HeightRequest="150" WidthRequest="150">
-                <BoxView.GestureRecognizers>
-                    <DropGestureRecognizer Drop="OnPlantDrop"/>
-                </BoxView.GestureRecognizers>
-            </BoxView>-->
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
